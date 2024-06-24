@@ -7,7 +7,14 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{json,js,jsx,ts,tsx,css,scss,md}": "prettier --config .prettierrc --write",
+    "*.{ts,tsx,js,jsx,json}": "eslint --cache --max-warnings 0",
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.1",
@@ -37,6 +44,8 @@
     "eslint-config-expo": "^7.0.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.6.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
     "typescript-eslint": "^7.13.1"
   },
