@@ -4,10 +4,12 @@ import { StyleSheet } from "react-native"
 const styles = StyleSheet.create({
     containerStyling:{
         flex: 1,
-        backgroundColor: 'rgb(235, 234, 233)',
+        // backgroundColor: 'rgb(235, 234, 233)',
+        backgroundColor: 'white',
         alignItems: 'center',
     },
-    temporalStyling:{
+    // for the bar
+    temporalBarStyling:{
         position: 'absolute',
         bottom: 70,
         height: 60,
@@ -37,17 +39,48 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         overflow: 'hidden',
         borderRadius: 50,
+        elevation: 5
     },
-    talkingBubbleStyling:{
+    bubbleContainerStyling:{
         position: 'absolute',
         alignItems: 'center',
-        top: 450,
+        justifyContent: 'center',
+        bottom: 30,
+        height: 50,
+        width: 50,
+        zIndex: 1
+    },
+    talkingBubbleStyling:{
         backgroundColor: 'purple',
-        height: 200,
-        width: 200,
+        alignItems: 'center',
+        opacity: 0.3,
+        height: "100%",
+        width: "100%",
         elevation: 5,
-        borderRadius: 120
-    }
+        borderRadius: 120,
+        zIndex: 2
+    },
+    centerBubbleStyling:{
+        position: 'absolute',
+        top: '25%',
+        backgroundColor: 'purple',
+        opacity: 0.6,
+        height: '50%',
+        width: '50%',
+        borderRadius: 120,
+        zIndex: 3
+    },
+    // for the blob
+    temporalBlobStyling:{
+        position: 'absolute',
+        height: '100%',
+        width: '100%'
+    },
+    blobStyling:{
+        position:'absolute',
+        height: 115,
+        width: 115
+    },
 })
 
 export default styles;

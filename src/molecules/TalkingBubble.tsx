@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { Animated} from "react-native"
+import { Animated, View} from "react-native"
 import RNSoundLevel from 'react-native-sound-level'
 import { StartListening } from "../back/SoundLevel"
 import styles from "../../style"
@@ -7,9 +7,9 @@ import styles from "../../style"
 
 const MONITOR_INTERVAL = 250 // in ms
 const SAMPLING_RATE = 8000 // default is 22050
-const MAX_VOLUME = 7_000
-const AGENT_SPEAKING_THRESHOLD = 7_750
-const SILENCE_THRESHOLD = 400
+const MAX_VOLUME = 6_750
+const AGENT_SPEAKING_THRESHOLD = 7_500
+const SILENCE_THRESHOLD = 1_750
 const AGENT_PAUSE = 3 // in sec
 
 export default function TalkingBubble () {
@@ -21,9 +21,9 @@ export default function TalkingBubble () {
 
     useEffect(() => {
         Animated.timing(scale,{
-          toValue:(loudness/MAX_VOLUME),
+          toValue:loudness/MAX_VOLUME,
           useNativeDriver:true,
-          duration:250,
+          duration:500,
         }).start()
       },[loudness])
 
@@ -46,16 +46,13 @@ export default function TalkingBubble () {
             RNSoundLevel.onNewFrame = (data) => {
                 const currData = data.rawValue
                 setLoudness(0)
-                if (currData > AGENT_SPEAKING_THRESHOLD)
-                {   
-                    console.log('Agent speaking')
+                if (currData > AGENT_SPEAKING_THRESHOLD) {   
                     if (!agentSpeaking){
                         setAgentSpeaking(true)
                         clearTimeout(timeoutRef.current);
                     }
-                    }
+                }
                 else if (currData > SILENCE_THRESHOLD) {
-                    console.log('Speaker speaking')
                     setLoudness(currData)
                     if (agentSpeaking){
                         clearTimeout(timeoutRef.current);
@@ -78,16 +75,19 @@ export default function TalkingBubble () {
     }, [agentSpeaking]);
 
     return (
-        <Animated.View 
-            style={[{...styles.talkingBubbleStyling,
-            transform:[{
-                scale: scale.interpolate({
-                    inputRange: [0,1],
-                    outputRange: [0,1],
-                })
-                }]
-            }]}>
-            {/* <Text style={{'top': '50%'}}>{loudness}</Text> */}
-        </Animated.View>
+        <View style={styles.bubbleContainerStyling}>
+            <Animated.View 
+                style={[{...styles.talkingBubbleStyling,
+                transform:[{
+                    scale: scale.interpolate({
+                        inputRange: [0,1],
+                        outputRange: [1,2],
+                        extrapolate: 'clamp' // clamp prevents exceeding max range size
+                        })
+                    }]
+                }]}>
+            </Animated.View>
+            <View style={styles.centerBubbleStyling}/>
+        </View>
     )
 }

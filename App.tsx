@@ -1,10 +1,10 @@
-import React, {useRef} from 'react';
-import {View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Animated, View} from 'react-native';
 import Video, {VideoRef} from 'react-native-video';
 import TemporalComponent from './src/atoms/TemporalComponent';
-import SliderBar  from './src/molecules/SliderBar';
+import MovingSmiley from './src/molecules/MovingSmiley';
 import styles from './style';
-import TalkingBubble from './src/atoms/TalkingBubble';
+import TalkingBubble from './src/molecules/TalkingBubble';
 import NoPermissionPage from './src/pages/NoPermissionsPage';
 import { RequestPermissions } from './src/back/SoundLevel';
 
@@ -21,6 +21,25 @@ export default function App(){
   const videoRef = useRef<VideoRef>(null);
   const background = require('./assets/videos/talkingDoctor_v2_cropped.mov');
 
+  const [showComponent, setShowComponent] = useState(false)
+  const opacity = useRef(new Animated.Value(1)).current
+  
+  useEffect(() => {
+    if (showComponent){
+      Animated.timing(opacity, {
+          toValue: 0,
+          duration: 30,
+          useNativeDriver: true
+      }).start();
+    } else {
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 30,
+        useNativeDriver: true
+      }).start();
+    }
+  }, [showComponent])
+
   return (
     <>
       {success ? 
@@ -32,10 +51,25 @@ export default function App(){
                   style={styles.backgroundVideo}
               />
             </View>
-            <TalkingBubble/>
-            <TemporalComponent delay={delay} duration={duration}>
-                  <SliderBar/>
-            </TemporalComponent>
+            <Animated.View style={{
+                                  ...styles.bubbleContainerStyling,
+                                  opacity: opacity.interpolate({inputRange: [0,1],
+                                                                outputRange: [0,1],
+                                                              })
+                                  }}>
+                  <TalkingBubble/>
+            </Animated.View>
+            <Animated.View style={{
+                                  ...styles.temporalBlobStyling,
+                                  opacity: opacity.interpolate({inputRange: [0,1],
+                                    outputRange: [1,0],
+                                  })
+                                  }}>
+                <TemporalComponent delay={delay} duration={duration} setShowComponent={setShowComponent}>
+                      {/* <SliderBar/> */}
+                      <MovingSmiley/>
+                </TemporalComponent>
+            </Animated.View>
         </View>
         : 
       <NoPermissionPage permissionName={'Mic'}></NoPermissionPage>

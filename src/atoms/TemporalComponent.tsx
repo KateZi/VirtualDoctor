@@ -7,11 +7,12 @@ interface TemporalComponentProps {
     children: React.ReactNode;
     delay: number;
     duration: number;
+    setShowComponent: React.Dispatch<React.SetStateAction<any>>
   }
 
   
-export default function TemporalComponent ({children, delay, duration}: TemporalComponentProps) {
-    const [showComponent, setShowComponent] = useState(false);
+export default function TemporalComponent ({children, delay, duration, setShowComponent}: TemporalComponentProps) {
+    // const [showComponent, setShowComponent] = useState(false);
 
     useEffect(() => {
         let showTimeoutId = setTimeout(() => {
@@ -26,8 +27,6 @@ export default function TemporalComponent ({children, delay, duration}: Temporal
         }
     }, []);
 
-    console.log('showComponent', showComponent)
-
-    return (<View style={styles.temporalStyling}>{showComponent ? children : null}</View>);
+    return (<View>{children}</View>);
 }
   
