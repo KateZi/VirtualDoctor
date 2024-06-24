@@ -20,16 +20,15 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.demo",
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-video",
-      ["expo-asset",
+      [
+        "expo-asset",
         {
           "assets": ["./assets"]
         }
