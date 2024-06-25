@@ -5,7 +5,7 @@ interface TemporalComponentProps {
   children: React.ReactNode;
   delay: number;
   duration: number;
-  setShowComponent: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowComponent: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function TemporalComponent({
@@ -16,13 +16,13 @@ export default function TemporalComponent({
 }: TemporalComponentProps) {
   useEffect(() => {
     const showTimeoutId = setTimeout(() => {
-      setShowComponent(true);
+      setShowComponent(1);
     }, delay * 1000);
     const hideTimeoutId = setTimeout(
       () => {
-        setShowComponent(false);
+        setShowComponent(0);
       },
-      (delay + duration) * 1000
+      (delay + duration) * 1000,
     );
     return () => {
       clearTimeout(showTimeoutId);

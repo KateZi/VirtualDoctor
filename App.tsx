@@ -6,10 +6,10 @@ import MovingSmiley from "./src/molecules/MovingSmiley";
 import styles from "./style";
 import TalkingBubble from "./src/molecules/TalkingBubble";
 import NoPermissionPage from "./src/pages/NoPermissionsPage";
-import { RequestPermissions } from "./src/back/SoundLevel";
 import videos from "./assets/videos/videos";
+import { RequestPermissions } from "./src/back/SoundLevel";
 
-export default function App() {
+export default async function App() {
   const success = useRef(RequestPermissions());
 
   const delay = 14;
@@ -20,23 +20,15 @@ export default function App() {
   const videoRef = useRef<VideoRef>(null);
   const background = videos["smallDoctorv2"];
 
-  const [showComponent, setShowComponent] = useState(false);
+  const [showComponent, setShowComponent] = useState(0);
   const opacity = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    if (showComponent) {
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 50,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 50,
-        useNativeDriver: true,
-      }).start();
-    }
+    Animated.timing(opacity, {
+      toValue: showComponent,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
   }, [showComponent]);
 
   return (
@@ -55,7 +47,7 @@ export default function App() {
               ...styles.bubbleContainerStyling,
               opacity: opacity.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, 1],
+                outputRange: [1, 0],
               }),
             }}
           >
@@ -66,7 +58,7 @@ export default function App() {
               ...styles.temporalBlobStyling,
               opacity: opacity.interpolate({
                 inputRange: [0, 1],
-                outputRange: [1, 0],
+                outputRange: [0, 1],
               }),
             }}
           >
@@ -81,7 +73,7 @@ export default function App() {
           </Animated.View>
         </View>
       ) : (
-        <NoPermissionPage permissionName={"Mic"}></NoPermissionPage>
+        <NoPermissionPage permissionName={"Mic"} />
       )}
     </>
   );
