@@ -1,36 +1,14 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  // App
   containerStyling: {
     flex: 1,
     // backgroundColor: 'rgb(235, 234, 233)',
     backgroundColor: "white",
     alignItems: "center",
   },
-  // for the bar
-  temporalBarStyling: {
-    position: "absolute",
-    bottom: 70,
-    height: 60,
-    width: "100%",
-  },
-  barStyling: {
-    backgroundColor: "white",
-    borderColor: "orange",
-    borderRadius: 10,
-    borderWidth: 10,
-    elevation: 2,
-    height: "100%",
-    width: "100%",
-  },
-  sliderStyling: {
-    backgroundColor: "orange",
-    height: "100%",
-    padding: 0,
-  },
-  backgroundVideo: {
-    flex: 1,
-  },
+  // Video
   videoContainerStyling: {
     top: 200,
     height: "25%",
@@ -39,7 +17,21 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: 50,
     elevation: 5,
+    position: "relative",
   },
+  backgroundVideo: {
+    height: "100%",
+    width: "100%",
+    zIndex: 3,
+    position: "absolute",
+  },
+  avatarImageStyling: {
+    height: "100%",
+    width: "100%",
+    zIndex: 1,
+    position: "absolute",
+  },
+  // voice feedback
   bubbleContainerStyling: {
     position: "absolute",
     alignItems: "center",
@@ -69,7 +61,7 @@ const styles = StyleSheet.create({
     borderRadius: 120,
     zIndex: 3,
   },
-  // for the blob
+  // drag and drop blob
   temporalBlobStyling: {
     position: "absolute",
     height: "100%",
@@ -79,6 +71,27 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: 115,
     width: 115,
+  },
+  // sliding bar
+  temporalBarStyling: {
+    position: "absolute",
+    bottom: 70,
+    height: 60,
+    width: "100%",
+  },
+  barStyling: {
+    backgroundColor: "white",
+    borderColor: "orange",
+    borderRadius: 10,
+    borderWidth: 10,
+    elevation: 2,
+    height: "100%",
+    width: "100%",
+  },
+  sliderStyling: {
+    backgroundColor: "orange",
+    height: "100%",
+    padding: 0,
   },
 });
 

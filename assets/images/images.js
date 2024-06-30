@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable no-undef */
-const smiley = require("./blobTheSmiley.png");
-const smileyOutline = require("./blobOutline.png");
-const button = require("./button.png");
+import smiley from "./blobTheSmiley.png";
+import smileyOutline from "./blobOutline.png";
+import button from "./button.png";
+import doctor from "./videoDoctor.png";
 
 export default {
   smiley,
   smileyOutline,
   button,
+  doctor,
 };

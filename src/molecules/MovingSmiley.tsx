@@ -1,9 +1,13 @@
-import { useRef } from "react";
-import Smiley from "../atoms/Smiley";
+import { useContext, useRef } from "react";
 import { Animated, Dimensions, PanResponder, View } from "react-native";
+import { AgentSpeaking, DragDrop } from "../back/AppContext";
+import Smiley from "../atoms/Smiley";
 import styles from "../../style";
 
 export default function MovingSmiley() {
+  const { dragDrop, setDragDrop } = useContext(DragDrop);
+  const { setAgentSpeaking } = useContext(AgentSpeaking);
+
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
 
@@ -56,36 +60,44 @@ export default function MovingSmiley() {
               useNativeDriver: true,
               duration: 50,
             }),
-          ]).start(() => {
             Animated.timing(opacity, {
               toValue: 0,
               duration: 500,
               useNativeDriver: false,
-            }).start();
+            }),
+          ]).start(() => {
+            setDragDrop(false);
+            setAgentSpeaking(true);
           });
         }
       },
-    })
+    }),
   ).current;
 
   return (
-    <Animated.View style={{ opacity: opacity }}>
-      <View style={{ ...outlineXY, position: "absolute" }}>
-        <Smiley target={true}></Smiley>
-      </View>
-      <Animated.View
-        style={{
-          ...smileyXY,
-          transform: [
-            { translateX: pan.x },
-            { translateY: pan.y },
-            { scale: scale },
-          ],
-        }}
-        {...panResponder.panHandlers}
-      >
-        <Smiley target={false}></Smiley>
-      </Animated.View>
-    </Animated.View>
+    <>
+      {dragDrop && (
+        <Animated.View
+          style={{ ...styles.temporalBlobStyling, opacity: opacity }}
+        >
+          <View style={{ ...outlineXY, position: "absolute" }}>
+            <Smiley target={true}></Smiley>
+          </View>
+          <Animated.View
+            style={{
+              ...smileyXY,
+              transform: [
+                { translateX: pan.x },
+                { translateY: pan.y },
+                { scale: scale },
+              ],
+            }}
+            {...panResponder.panHandlers}
+          >
+            <Smiley target={false}></Smiley>
+          </Animated.View>
+        </Animated.View>
+      )}
+    </>
   );
 }
