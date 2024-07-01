@@ -5,6 +5,7 @@ export async function StartListening(
   samplingRate?: number,
 ) {
   try {
+    console.log("Starting the sound level.");
     await RNSoundLevel.start({
       monitoringInterval: monitor_interval,
       samplingRate: samplingRate,

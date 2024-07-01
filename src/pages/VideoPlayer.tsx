@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Animated, Image, View } from "react-native";
-import { AgentSpeaking, DragDrop } from "../back/AppContext";
+import { SpeakingContext, DragDropContext } from "../contexts/AppContext";
 import images from "../../assets/images/images";
 import styles from "../../style";
 import Video, { VideoRef } from "react-native-video";
@@ -11,8 +11,8 @@ export default function VideoPlayer() {
   const videoIdx = useRef(0);
   const background = videos.videoClips[videoIdx.current];
   const { agentSpeaking, end, setAgentSpeaking, setEnd } =
-    useContext(AgentSpeaking);
-  const { setDragDrop } = useContext(DragDrop);
+    useContext(SpeakingContext);
+  const { setDragDrop } = useContext(DragDropContext);
   const opacity = useRef(new Animated.Value(agentSpeaking ? 1 : 0)).current;
   const [paused, setPaused] = useState(!agentSpeaking);
 
@@ -47,6 +47,7 @@ export default function VideoPlayer() {
 
   return (
     <View style={styles.videoContainerStyling}>
+      {console.log("Rerendered video.")}
       <Image source={images["doctor"]} style={styles.avatarImageStyling} />
       {!end && (
         <Animated.View

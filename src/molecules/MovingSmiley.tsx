@@ -1,12 +1,12 @@
 import { useContext, useRef } from "react";
 import { Animated, Dimensions, PanResponder, View } from "react-native";
-import { AgentSpeaking, DragDrop } from "../back/AppContext";
+import { SpeakingContext, DragDropContext } from "../contexts/AppContext";
 import Smiley from "../atoms/Smiley";
 import styles from "../../style";
 
 export default function MovingSmiley() {
-  const { dragDrop, setDragDrop } = useContext(DragDrop);
-  const { setAgentSpeaking } = useContext(AgentSpeaking);
+  const { dragDrop, setDragDrop } = useContext(DragDropContext);
+  const { setAgentSpeaking } = useContext(SpeakingContext);
 
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
@@ -38,6 +38,7 @@ export default function MovingSmiley() {
           useNativeDriver: false,
         })(evt, gestureState);
       },
+      // TODO: fix the weird jump!!!
       onPanResponderRelease: (evt, gestureState) => {
         if (isOverTarget(gestureState)) {
           const snapDist = {
