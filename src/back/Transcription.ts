@@ -1,5 +1,8 @@
 import * as FileSystem from "expo-file-system";
 import { OPENAI_API_KEY } from "../atoms/OpenAI_API_Key";
+import { formatDate, sessionName } from "./DirUtils";
+
+export const TRANSCRIPTION_PATH = `${FileSystem.documentDirectory}${sessionName}/transcriptions`;
 
 interface TranscribeAudioProps {
   body?: FormData;
@@ -10,7 +13,6 @@ export default async function TranscribeAudio({
   filePath,
 }: TranscribeAudioProps) {
   try {
-    console.log("Appealing to OpenAI");
     const response = await FileSystem.uploadAsync(
       "https://api.openai.com/v1/audio/transcriptions",
       filePath,
@@ -28,13 +30,34 @@ export default async function TranscribeAudio({
         parameters: {
           // Optional: Any additional parameters you want to send with the file upload
           model: "whisper-1", // For example, if you're using OpenAI's model parameter
+          language: "en",
+          prompt: "You are transcribing a Parkinson patient",
+          response_format: "verbose_json",
+          "timestamp_granularities[0]": "word",
         },
       },
     );
-    console.log("Got response");
-    const data = await response["body"];
-    console.log(data);
+    const data = JSON.parse(response["body"]);
+    if (response.status === 200) {
+      //   console.log("Transcription successful", data["text"]);
+      SaveResults(data["text"]);
+    } else {
+      console.warn("Transcription failed", data);
+    }
   } catch (error) {
     console.error("Error fetching the transcription.", error);
+  }
+}
+
+async function SaveResults(text: string) {
+  try {
+    const id = formatDate({ date: new Date(), full: true });
+    const path = TRANSCRIPTION_PATH + `/transcription_${id}.txt`;
+    await FileSystem.writeAsStringAsync(path, text, {
+      encoding: FileSystem.EncodingType.UTF8,
+    });
+    console.log("Transcription saved.");
+  } catch (error) {
+    console.error("Failed to save transcription", error);
   }
 }

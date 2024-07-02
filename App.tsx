@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { View } from "react-native";
 import MakeDirs from "./src/back/DirUtils";
 import MovingSmiley from "./src/molecules/MovingSmiley";
@@ -8,25 +8,19 @@ import styles from "./style";
 import TalkingBubble from "./src/molecules/TalkingBubble";
 import VideoPlayer from "./src/pages/VideoPlayer";
 import { SpeakingProvider, DragDropProvider } from "./src/contexts/AppContext";
-import RecordAudio from "./src/back/RecordAudio";
+// import TranscriptionPage from "./src/pages/TranscriptionsPage";
 
 export default function App() {
   const success = useRef(RequestPermissions());
 
-  useEffect(() => {
-    MakeDirs();
-  });
-
-  // return (
-  //   <>{success ? <VoiceTest /> : <NoPermissionPage permissionName="Mic" />}</>
-  // );
+  MakeDirs();
 
   return (
     <>
       {console.log("Rerendered the whole app.")}
       {success ? (
         <SpeakingProvider>
-          <RecordAudio />
+          {/* <TranscriptionPage /> */}
           <DragDropProvider>
             <View style={styles.containerStyling}>
               <VideoPlayer />

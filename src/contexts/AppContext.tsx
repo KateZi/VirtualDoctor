@@ -4,10 +4,8 @@ import { createContext, useState } from "react";
 export const SpeakingContext = createContext({
   agentSpeaking: false,
   end: false,
-  userSpeaking: false,
   setAgentSpeaking: (agentSpeaking: boolean) => {},
   setEnd: (end: boolean) => {},
-  setUserSpeaking: (userSpesking: boolean) => {},
 });
 
 export const DragDropContext = createContext({
@@ -18,14 +16,11 @@ export const DragDropContext = createContext({
 export function SpeakingProvider({ children }) {
   const [agentSpeaking, setAgentSpeaking] = useState(true);
   const [end, setEnd] = useState(false);
-  const [userSpeaking, setUserSpeaking] = useState(false);
   const value = {
     agentSpeaking,
     end,
-    userSpeaking,
     setAgentSpeaking,
     setEnd,
-    setUserSpeaking,
   };
 
   return (

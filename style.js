@@ -72,6 +72,10 @@ const styles = StyleSheet.create({
     height: 115,
     width: 115,
   },
+  transcriptionContainerStyling: {},
+  transcriptionStyling: {},
+  agentTranscriptionStyling: {},
+  userTranscriptionStyling: {},
   // sliding bar
   temporalBarStyling: {
     position: "absolute",
