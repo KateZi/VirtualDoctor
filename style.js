@@ -8,6 +8,17 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
   },
+  // for loading and doing logistcs
+  loadingButtonStyling: {
+    top: "50%",
+    backgroundColor: "purple",
+    opacity: 0.5,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
+    width: 300,
+  },
   // Video
   videoContainerStyling: {
     top: 200,
@@ -72,10 +83,15 @@ const styles = StyleSheet.create({
     height: 115,
     width: 115,
   },
-  transcriptionContainerStyling: {},
-  transcriptionStyling: {},
-  agentTranscriptionStyling: {},
-  userTranscriptionStyling: {},
+  transcriptionContainerStyling: {
+    marginTop: 50,
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 10,
+  },
+  transcriptionStyling: { justifyContent: "center" },
+  agentTranscriptionStyling: { fontWeight: "bold", marginBottom: 10 },
+  userTranscriptionStyling: { marginBottom: 10 },
   // sliding bar
   temporalBarStyling: {
     position: "absolute",

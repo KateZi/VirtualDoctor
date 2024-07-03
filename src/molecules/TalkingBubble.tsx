@@ -61,7 +61,7 @@ export default function TalkingBubble() {
         console.error("Error clearing the timout.", error);
       }
     };
-  }, [agentSpeaking]);
+  }, [agentSpeaking, end]);
 
   const startRecordingAnimation = async () => {
     try {

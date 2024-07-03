@@ -1,26 +1,24 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
-import MakeDirs from "./src/back/DirUtils";
 import MovingSmiley from "./src/molecules/MovingSmiley";
-import NoPermissionPage from "./src/pages/NoPermissionsPage";
-import RequestPermissions from "./src/back/RequestPermissions";
 import styles from "./style";
 import TalkingBubble from "./src/molecules/TalkingBubble";
 import VideoPlayer from "./src/pages/VideoPlayer";
 import { SpeakingProvider, DragDropProvider } from "./src/contexts/AppContext";
-// import TranscriptionPage from "./src/pages/TranscriptionsPage";
+import TranscriptionPage from "./src/pages/TranscriptionsPage";
+import LoadingPage from "./src/pages/LoadingPage";
 
 export default function App() {
-  const success = useRef(RequestPermissions());
-
-  MakeDirs();
+  const [init, setInit] = useState(false);
 
   return (
     <>
       {console.log("Rerendered the whole app.")}
-      {success ? (
+      {!init ? (
+        <LoadingPage setInit={setInit} />
+      ) : (
         <SpeakingProvider>
-          {/* <TranscriptionPage /> */}
+          <TranscriptionPage />
           <DragDropProvider>
             <View style={styles.containerStyling}>
               <VideoPlayer />
@@ -29,8 +27,6 @@ export default function App() {
             </View>
           </DragDropProvider>
         </SpeakingProvider>
-      ) : (
-        <NoPermissionPage permissionName={"Mic"} />
       )}
     </>
   );

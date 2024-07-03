@@ -26,6 +26,7 @@ export default function VideoPlayer() {
   }, [agentSpeaking]);
 
   const handleEnd = () => {
+    console.log("Handling end");
     setAgentSpeaking(false);
     if (videoIdx.current < videos.videoClips.length - 1) {
       if (videoIdx.current === 2) {
@@ -34,6 +35,7 @@ export default function VideoPlayer() {
       videoIdx.current += 1;
       videoRef.current.seek(0);
     } else {
+      console.log("Setting up end.");
       setEnd(true);
     }
   };
@@ -43,25 +45,23 @@ export default function VideoPlayer() {
       <View style={styles.videoContainerStyling}>
         {console.log("Rerendered video.")}
         <Image source={images["doctor"]} style={styles.avatarImageStyling} />
-        {!end && (
-          <Animated.View
-            style={{
-              position: "absolute",
-              height: "100%",
-              width: "100%",
-              opacity: opacity,
-              zIndex: 2,
-            }}
-          >
-            <Video
-              source={background}
-              ref={videoRef}
-              style={{ ...styles.backgroundVideo }}
-              paused={!agentSpeaking}
-              onEnd={handleEnd}
-            />
-          </Animated.View>
-        )}
+        <Animated.View
+          style={{
+            position: "absolute",
+            height: "100%",
+            width: "100%",
+            opacity: opacity,
+            zIndex: 2,
+          }}
+        >
+          <Video
+            source={background}
+            ref={videoRef}
+            style={{ ...styles.backgroundVideo }}
+            paused={!agentSpeaking}
+            onEnd={handleEnd}
+          />
+        </Animated.View>
       </View>
     )
   );
