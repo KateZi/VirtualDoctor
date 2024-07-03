@@ -13,6 +13,7 @@ export default function MovingSmiley() {
 
   const smileyXY = { top: 40, left: windowWidth - 125 };
   const outlineXY = { top: windowHeight - 300, left: windowWidth / 3 };
+
   const blobDims = {
     width: styles.blobStyling["width"],
     height: styles.blobStyling["height"],
@@ -30,6 +31,7 @@ export default function MovingSmiley() {
   const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
   const pan = useRef(new Animated.ValueXY()).current;
+
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -38,9 +40,10 @@ export default function MovingSmiley() {
           useNativeDriver: false,
         })(evt, gestureState);
       },
-      // TODO: fix the weird jump!!!
       onPanResponderRelease: (evt, gestureState) => {
+        pan.extractOffset();
         if (isOverTarget(gestureState)) {
+          pan.flattenOffset();
           const snapDist = {
             x: outlineXY["left"] - smileyXY["left"],
             y: outlineXY["top"] - smileyXY["top"],
@@ -69,6 +72,7 @@ export default function MovingSmiley() {
           ]).start(() => {
             setDragDrop(false);
             setAgentSpeaking(true);
+            pan.extractOffset();
           });
         }
       },
