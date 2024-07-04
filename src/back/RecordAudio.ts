@@ -6,9 +6,8 @@ import {
 } from "expo-av/build/Audio";
 import * as FileSystem from "expo-file-system";
 import TranscribeAudio from "./Transcription";
-import { formatDate, sessionName } from "./DirUtils";
-
-const AUDIO_PATH = `${FileSystem.documentDirectory}${sessionName}/audio`;
+import { formatDate } from "./DirUtils";
+import { AUDIO_PATH } from "./Constants";
 
 export async function prepareRecording() {
   const recording = new Audio.Recording();

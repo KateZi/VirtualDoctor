@@ -3,6 +3,10 @@ import { Animated, Dimensions, PanResponder, View } from "react-native";
 import { SpeakingContext, DragDropContext } from "../contexts/AppContext";
 import Smiley from "../atoms/Smiley";
 import styles from "../../style";
+import { AppendWriteBufferToFile, formatDate } from "../back/DirUtils";
+import { TOUCH_FILE } from "../back/Constants";
+
+const BUFFER_SIZE = 30;
 
 export default function MovingSmiley() {
   const { dragDrop, setDragDrop } = useContext(DragDropContext);
@@ -31,11 +35,22 @@ export default function MovingSmiley() {
   const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
   const pan = useRef(new Animated.ValueXY()).current;
-
+  const panBuffer = useRef([]).current;
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (evt, gestureState) => {
+        panBuffer.push({
+          component: "DragDrop",
+          timestamp: formatDate({ date: new Date() }),
+          x: gestureState.moveX,
+          y: gestureState.moveY,
+        });
+
+        if (panBuffer.length >= BUFFER_SIZE) {
+          AppendWriteBufferToFile({ fileUri: TOUCH_FILE, data: panBuffer });
+        }
+
         return Animated.event([null, { dx: pan.x, dy: pan.y }], {
           useNativeDriver: false,
         })(evt, gestureState);
@@ -70,6 +85,12 @@ export default function MovingSmiley() {
               useNativeDriver: false,
             }),
           ]).start(() => {
+            if (panBuffer.length > 0) {
+              AppendWriteBufferToFile({
+                fileName: TOUCH_FILE,
+                data: panBuffer,
+              });
+            }
             setDragDrop(false);
             setAgentSpeaking(true);
             pan.extractOffset();

@@ -1,8 +1,7 @@
 import * as FileSystem from "expo-file-system";
 import { OPENAI_API_KEY } from "../atoms/OpenAI_API_Key";
-import { formatDate, sessionName } from "./DirUtils";
-
-export const TRANSCRIPTION_PATH = `${FileSystem.documentDirectory}${sessionName}/transcriptions`;
+import { formatDate } from "./DirUtils";
+import { TRANSCRIPTION_PATH } from "./Constants";
 
 interface TranscribeAudioProps {
   body?: FormData;

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { SpeakingContext } from "../contexts/AppContext";
 import { FlatList, Text, View } from "react-native";
 import styles from "../../style";
-import { TRANSCRIPTION_PATH } from "../back/Transcription";
+import { TRANSCRIPTION_PATH } from "../back/Constants";
 import * as FileSystem from "expo-file-system";
 
 async function readTranscriptions({

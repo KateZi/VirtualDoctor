@@ -5,6 +5,7 @@ import NoPermissionPage from "./NoPermissionsPage";
 import { View } from "react-native";
 import styles from "../../style";
 import Button from "../atoms/Button";
+// import { StartSensors } from "../back/SensorsUtils";
 
 export default function LoadingPage({
   setInit,
@@ -16,6 +17,7 @@ export default function LoadingPage({
   function onPress() {
     const init = async () => {
       await MakeDirs();
+      // StartSensors();
       setInit(true);
     };
     init();

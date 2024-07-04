@@ -1,6 +1,6 @@
 import * as FileSystem from "expo-file-system";
 
-export const dirNames = ["transcriptions", "audio"];
+export const dirNames = ["transcriptions", "audio", "touch"];
 export const sessionName = formatDate({ date: new Date() });
 
 interface formatDateProps {
@@ -46,6 +46,41 @@ async function MakeDir({ dirName }: { dirName: string }) {
       });
     } catch (e) {
       console.info("ERROR", e);
+    }
+  }
+}
+
+interface AppendWriteFileProps {
+  fileUri: string;
+  data: unknown[];
+}
+export async function AppendWriteBufferToFile({
+  fileUri,
+  data,
+}: AppendWriteFileProps) {
+  const fileInfo = await FileSystem.getInfoAsync(fileUri);
+  const exists = fileInfo.exists;
+  if (exists) {
+    const existingContent = await FileSystem.readAsStringAsync(fileUri);
+    const existingParsedContent = JSON.parse(existingContent || "[]");
+    const appendedContent = [
+      ...existingParsedContent,
+      ...data.splice(0, data.length),
+    ];
+    await FileSystem.writeAsStringAsync(
+      fileUri,
+      JSON.stringify(appendedContent),
+    );
+    console.log("Appended data.");
+  } else {
+    try {
+      await FileSystem.writeAsStringAsync(
+        fileUri,
+        JSON.stringify(data.splice(0, data.length)),
+      );
+      console.log("New file created and data saved to: ", fileUri);
+    } catch (error) {
+      console.error("Error saving data", error);
     }
   }
 }

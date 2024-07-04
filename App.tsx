@@ -11,6 +11,10 @@ import LoadingPage from "./src/pages/LoadingPage";
 export default function App() {
   const [init, setInit] = useState(false);
 
+  // useEffect(() => {
+  //   StopSensors();
+  // });
+
   return (
     <>
       {console.log("Rerendered the whole app.")}
