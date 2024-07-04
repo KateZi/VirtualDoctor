@@ -1,6 +1,6 @@
 import * as FileSystem from "expo-file-system";
 
-export const dirNames = ["transcriptions", "audio", "touch"];
+export const dirNames = ["transcriptions", "audio", "touch", "IMU"];
 export const sessionName = formatDate({ date: new Date() });
 
 interface formatDateProps {
