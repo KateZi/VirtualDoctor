@@ -10,6 +10,11 @@ import { formatDate } from "./DirUtils";
 import { AUDIO_PATH } from "./Constants";
 
 export async function prepareRecording() {
+  await Audio.setAudioModeAsync({
+    allowsRecordingIOS: true,
+    playsInSilentModeIOS: true,
+  });
+
   const recording = new Audio.Recording();
   // if not already recording prepare and start the recording
   try {

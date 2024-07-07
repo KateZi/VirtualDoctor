@@ -12,7 +12,9 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.demo",
+      "infoPlist": { "UIBackgroundModes": ["audio"] }
     },
     "android": {
       "adaptiveIcon": {
@@ -26,7 +28,12 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      ["@react-native-voice/voice"],
+      [
+        "react-native-permissions",
+        {
+          "iosPermissions": ["Microphone", "Motion", "SpeechRecognition"]
+        }
+      ],
       [
         "expo-asset",
         {

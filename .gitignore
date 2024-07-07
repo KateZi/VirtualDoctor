@@ -36,6 +36,7 @@ yarn-error.*
 *.tsbuildinfo
 
 android/
+ios/
 
 assets/videos/talkingDoctor_v2.mp4
 assets/videos/talkingDoctor_v2_cropped_copy.mov
